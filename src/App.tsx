@@ -23,19 +23,24 @@ export default function App() {
 
   const handleClick = async () => {
     if (!account) return
-    const hash = await walletClient.sendTransaction({
-      account,
-      to: RECEIVER,
-      value: 1000000000n,
-      paymaster: PAYMASTER_CONTRACT_ADDRESS,
-      paymasterInput: getApprovalBasedPaymasterInput({
-        innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
-        minAllowance: 1n,
-        token: USDT_ADDRESS
-      }),
-      gas: 1_500_000n
-    })
-    setHash(hash)
+    try {
+      const hash = await walletClient.sendTransaction({
+        account,
+        to: RECEIVER,
+        value: 1000000000n,
+        paymaster: PAYMASTER_CONTRACT_ADDRESS,
+        paymasterInput: getApprovalBasedPaymasterInput({
+          innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
+          minAllowance: 1n,
+          token: USDT_ADDRESS
+        }),
+        gas: 1_500_000n,
+        maxPriorityFeePerGas: 100000n
+      })
+      setHash(hash)
+    } catch (error) {
+      console.error('handleClick error: ', error)
+    }
   }
 
   useEffect(() => {
