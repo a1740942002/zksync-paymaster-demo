@@ -8,8 +8,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "2.10.5",
-    "zksync-ethers": "^6.1.0"
+    "viem": "2.10.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
