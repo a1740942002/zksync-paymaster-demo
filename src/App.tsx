@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Address, Hash, TransactionReceipt, stringToHex, stringify } from 'viem'
 import 'viem/window'
 import {
+  HOLD_ADDRESS,
   PARTNER_CODE,
   PAYMASTER_CONTRACT_ADDRESS,
   RECEIVER,
-  USDT_ADDRESS,
   publicClient,
   walletClient
 } from './config'
@@ -32,7 +32,7 @@ export default function App() {
         paymasterInput: getApprovalBasedPaymasterInput({
           innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
           minAllowance: 1n,
-          token: USDT_ADDRESS
+          token: HOLD_ADDRESS
         }),
         gas: 1_500_000n,
         maxPriorityFeePerGas: 100000n
