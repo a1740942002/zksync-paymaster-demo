@@ -32,7 +32,7 @@ export default function App() {
         paymaster: PAYMASTER_CONTRACT_ADDRESS,
         paymasterInput: getApprovalBasedPaymasterInput({
           innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
-          minAllowance: 1n,
+          minAllowance: 1000000000n,
           token: USDT_ADDRESS
         }),
         gas: 1_500_000n,
