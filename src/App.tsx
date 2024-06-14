@@ -6,6 +6,7 @@ import {
   PARTNER_CODE,
   PAYMASTER_CONTRACT_ADDRESS,
   RECEIVER,
+  USDT_ADDRESS,
   publicClient,
   walletClient
 } from './config'
@@ -32,14 +33,16 @@ export default function App() {
         paymasterInput: getApprovalBasedPaymasterInput({
           innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
           minAllowance: 1n,
-          token: HOLD_ADDRESS
+          token: USDT_ADDRESS
         }),
         gas: 1_500_000n,
         maxPriorityFeePerGas: 100000n
       })
       setHash(hash)
     } catch (error) {
-      console.error('handleClick error: ', error)
+      if (error instanceof Error) {
+        console.error('handleClick error: ', error.message)
+      }
     }
   }
 

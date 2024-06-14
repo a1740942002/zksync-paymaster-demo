@@ -25,7 +25,7 @@ export const USDT_ADDRESS: Address =
 export const USDC_ADDRESS: Address =
   '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4'
 export const HOLD_ADDRESS: Address =
-  '0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2'
-export const PARTNER_CODE = 'XYFINANCE'
+  '0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2'
+export const PARTNER_CODE = 'XY_FINANCE'
 
 export const RECEIVER = '0x62AD9E5224f930C5a0558B6D36DF0Bba90FF8892'
