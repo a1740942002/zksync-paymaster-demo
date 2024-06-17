@@ -3,23 +3,28 @@ import {
   createPublicClient,
   createWalletClient,
   custom,
-  Address
+  Address,
+  publicActions
 } from 'viem'
 import { eip712WalletActions } from 'viem/zksync'
-import { zkSync } from 'viem/chains'
+import { zkSyncEra } from './zksync'
 
 export const publicClient = createPublicClient({
-  chain: zkSync,
+  chain: zkSyncEra,
   transport: http()
 })
 
 export const walletClient = createWalletClient({
-  chain: zkSync,
+  chain: zkSyncEra,
   transport: custom(window.ethereum!)
-}).extend(eip712WalletActions())
+})
+  .extend(publicActions)
+  .extend(eip712WalletActions())
 
 export const PAYMASTER_CONTRACT_ADDRESS: Address =
   '0x069246dFEcb95A6409180b52C071003537B23c27'
+export const SYNC_SWAP_PAYMASTER_CONTRACT_ADDRESS: Address =
+  '0x9B5def958d0f3b6955cBEa4D5B7809b2fb26b059'
 export const USDT_ADDRESS: Address =
   '0x493257fD37EDB34451f62EDf8D2a0C418852bA4C'
 export const USDC_ADDRESS: Address =
@@ -28,4 +33,4 @@ export const HOLD_ADDRESS: Address =
   '0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2'
 export const PARTNER_CODE = 'XY_FINANCE'
 
-export const RECEIVER = '0x62AD9E5224f930C5a0558B6D36DF0Bba90FF8892'
+export const RECEIVER: Address = '0x62AD9E5224f930C5a0558B6D36DF0Bba90FF8892'

@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { Address, Hash, TransactionReceipt, stringToHex, stringify } from 'viem'
+import { useState } from 'react'
+import { Address, TransactionReceipt, stringToHex, stringify } from 'viem'
 import 'viem/window'
 import {
   HOLD_ADDRESS,
   PARTNER_CODE,
   PAYMASTER_CONTRACT_ADDRESS,
   RECEIVER,
+  SYNC_SWAP_PAYMASTER_CONTRACT_ADDRESS,
   USDT_ADDRESS,
   publicClient,
   walletClient
@@ -14,7 +15,6 @@ import { getApprovalBasedPaymasterInput } from 'viem/zksync'
 
 export default function App() {
   const [account, setAccount] = useState<Address>()
-  const [hash, setHash] = useState<Hash>()
   const [receipt, setReceipt] = useState<TransactionReceipt>()
 
   const connect = async () => {
@@ -29,33 +29,26 @@ export default function App() {
         account,
         to: RECEIVER,
         value: 1000000000n,
-        paymaster: PAYMASTER_CONTRACT_ADDRESS,
+        paymaster: SYNC_SWAP_PAYMASTER_CONTRACT_ADDRESS,
         paymasterInput: getApprovalBasedPaymasterInput({
           innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
-          minAllowance: 1000000000n,
+          minAllowance: 100000000000000000000000n,
           token: USDT_ADDRESS
         }),
-        gas: 1_500_000n,
-        maxPriorityFeePerGas: 100000n
+        gas: 300_000n,
+        maxPriorityFeePerGas: 0n
       })
-      setHash(hash)
+
+      const receipt = await publicClient.waitForTransactionReceipt({
+        hash
+      })
+      setReceipt(receipt)
     } catch (error) {
       if (error instanceof Error) {
         console.error('handleClick error: ', error.message)
       }
     }
   }
-
-  useEffect(() => {
-    ;(async () => {
-      if (hash) {
-        const receipt = await publicClient.waitForTransactionReceipt({
-          hash
-        })
-        setReceipt(receipt)
-      }
-    })()
-  }, [hash])
 
   return (
     <>
