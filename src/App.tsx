@@ -29,13 +29,13 @@ export default function App() {
         account,
         to: RECEIVER,
         value: 1000000000n,
-        paymaster: SYNC_SWAP_PAYMASTER_CONTRACT_ADDRESS,
+        paymaster: PAYMASTER_CONTRACT_ADDRESS,
         paymasterInput: getApprovalBasedPaymasterInput({
           innerInput: stringToHex(PARTNER_CODE, { size: 32 }),
           minAllowance: 100000000000000000000000n,
-          token: USDT_ADDRESS
+          token: HOLD_ADDRESS
         }),
-        gas: 300_000n,
+        gas: 260_000n,
         maxPriorityFeePerGas: 0n
       })
 
